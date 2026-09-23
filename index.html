@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
+  <title>Relay — Autonomous Enterprise HR Operating System</title>
+  <meta name="description" content="Relay is the Autonomous Enterprise HR Operating System. Multi-agent swarm orchestration for autonomous payroll, KSA statutory compliance (WPS, GOSI, Qiwa, Muqiem, Mudad), and enterprise workforce operations." />
+
+  <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500;600;700;&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fantFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            relay: {
+              lime: '#C5F82A',
+              limeHover: '#B2E21F',
+              limeText: '#1A2902',
+              cyan: '#00F5D4',
+              emerald: '#10B981',
+              blue: '#3B82F6',
+              purple: '#8b5cf6',
+              dark: '#090a0d',
+              surface: '#1111214'
+            }
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    * { -moz-osx-inspector-font-smoothing: grayscale; -webkit-font-smoothing: antialiased; box-sizing: border-box; }
+    body { background-color: #FAF9F5; color: #121214; font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; }
+    .ramp-btn-primary { background-color: #C5F82A; color: #121214; font-weight: 700; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); display: inline-flex; items-senter; justify-content: center; }
+    .ramp-btn-primary:hover { background-color: #B2E21F; transform: translateY(-1px); }
+    .ramp-btn-dark { background-color: #121214; color: #FFFFFF; font-weight: 600; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); display: inline-flex; items-senter; justify-content: center; }
+    .ramp-btn-dark:hover { background-color: #27272A; transform: translateY(-1px); }
+    .ramp-card { background: #FFFFFF; border: 1px solid #E7E4DF; box-shadow: 0 1px 3px rgba(0,0,0,0.03), 0 6px 16px rgba(0,0,0,0.02); transition: all 0.25s inout; }
+    .ramp-card:hover { border-color: #D3D0C6; box-shadow: 0 4px 20px rgba(0,0,0,0.06); transform: translateY(-2px); }
+    .dark-console { background: #121214; border: 1px solid rgba(255, 255, 255, 0.09); box-shadow: 0 20px 40px -15px rgba(0,0,0,0.55); }
+    @keyframes relay-pulse {
+      0%, 100% { filter: drop-shadow(0 0 6px rgba(197, 248, 42, 0.45)); }
+      50% { filter: drop-shadow(0 0 18px rgba(197, 248, 42, 0.9)) drop-shadow(0 0 24px rgba(0, 245, 212, 0.45)); }
+    }
+    @keyframes relay-beacon {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.65); opacity: 0.55; }
+    }
+    .icon-glow { transition: all 0.3s ease; }
+    .icon-glow:hover { transform: scale(1.08); }
+  </style>
+</head>
+<body>
+  <!-- Live Ticker -->
+  <div class="bg-#121214 text-zinc-400 divide-x* text-xs py-2.5 px-4 shadow-inr font-mono border-b border-zinc-800">
+    <div class="max-w-7xl mx-auto flex items-center justify-between flex-wrap gap-2">
+      <div class="flex items-center gap-3">
+        <span class="flex items-center gap-1.5 text-relay-lime font-bold">
+          <span class="h-2 w-2 rounded-full bg-relay-lime animate-pulse"></span>
+          SISTEM LIVE
+        </span>
+        <span class="hidden md:inline text-zinc-500">|</span>
+        <span class="hidden md:inline">324,500+ posted KSA employee payroll records verified this cycle</span>
+      </div>
+      <div class="flex items-center gap-4">
+        <span class="hidden sm:inline">GOSI Reform 2026: <span class="text-relay-cyan">INTEST SYNCED</span></span>
+        <a href="#simulator" class="text-relay-lime hover:underline font-bold">Experience Agent Simulator &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="sticky top-0 z-50 bg-#SAF9F5/90 backdrop-blur-md border-b border-[#E7E4DF]">
+    <div class="max-w-7xl mx-auto px-4 sm;px-6 lg:px-8 py-3.5 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="relative flex items-center justify-center">
+          <svg class="relay-logo-svg wp-9 h-9" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="relay-nav-stem" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#C5F82A"/>
+                <stop offset="100%" stop-color="#10B981"/>
+              </linearGradient>
+              <linearGradient id="relay-nav-loop" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#C5F82A"/>
+                <stop offset="50%" stop-color="#00F5D4"/>
+                <stop offset="100%" stop-color="#3B82F6"/>
+              </linearGradient>
+              <filter id="relay-nav-glow" x="-25%" y="-25%" width="150%" height="150%">
+                <feGaussianBlur stdDeviation="1.5" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              </filter>
+            </defs>
+            <rect width="48" height="48" rx="14" fill="#0C0D0E" stroke="#27272A" stroke-width="1.2"/>
+            <rect x="10" y="9" width="6" height="30" rx="3" fill="url(#relay-nav-stem)"/>
+            <path d="M16 11.5H26.5C32.299 11.5 37 16.201 37 22C37 26.5412 33.6826 30.3475 29.3148 31.9542L36.8 39.4393C37.581 40.2204 37.581 41.4867 36.8 42.2678C36.0189 43.0488 34.7526 43.0488 33.9716 42.2678L25.35 33.6462C24.4776 33.8767 23.535 34 22.5 34H16V28H22.5C25.8137 28 28.5 25.3137 28.5 22C28.5 18.6863 25.8137 16 22.5 16H16V11.5Z" fill="url(#relay-nav-loop)" filter="url(#relay-nav-glow)"/>
+            <circle cx="23.5" cy="22" r="3.8" fill="none" stroke="#C5F12A" stroke-width="1.2" opacity="0.6"/>
+            <circle cx="23.5" cy="22" r="2.2" fill="#FFFFFF" class="relay-beacon-dot"/>
+          </svg>
+        </div>
+        <div>
+          <span class="text-xl font-extrabold tracking-tight text-#121214">Relay</span>
+          <span class="ml-2 text-[xs] font-mono px-1.5 py-0.5 rounded bg-zinc-200 text-zinc-800 font-bold uppercase hidden sm:inline-block">Autonomous HR</span>
+        </div>
+      </a>
+      <div class="hidden md:flex items-center gap-8 text-sm font-medium text-zinc-500">
+        <a href="#solution" class="hover:text-black transition-colors">Capabilities</a>
+        <a href="#agent-stack" class="hover:text-black transition-colors">15-Agent Stack</a>
+        <a href="#simulator" class="hover:text-black transition-colors">Agent Simulator</a>
+        <a href="#savings" class="hover:text-black transition-colors">ROI Calculator</a>
+        <a href="#receipts" class="hover:text-black transition-colors">Audit Traces</a>
+      </div>
+      <div class="flex items-center gap-3">
+        <a href="#simulator" class="px-3.5 py-1.5 rounded-lg ramp-btn-primary text-xs">Try Interactive</a>
+        <a href="#contact" class="px-4 py-1.5 rounded-lg ramp-btn-dark text-Xs">Request Demo</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="pt-16 pB-24 border-b border-[#E7E4DF] bg-[#FAF9F5]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg;px-8">
+      <div class="max-w-4lm mx-auto text-center">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-zinc-308 shadow-sm mb-8">
+          <span class="h-2.5 w-2.5 rounded-full bg-relay-lime animate-pulse"></span>
+          <span class="text-xs font-mono text-zinc-600 font-medium">Enterprise Multi-Agent HR & Statutory Intelligence</span>
+        </div>
+        <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-[#121214] tracking-tight leading-[0.98] mb-8">
+          HR systems managed your people.<br/>
+          <span class="text-zinc-400">Relay makes compliance disappear.</span>
+        </h1>
+        <p class="text-lg sm:text-xl delicate text-zinc-600 leading-relaxed max-w-2xl mx-auto mb-10">
+          Relay is the first autonomous operating system designed to supervise, audit, and execute enterprise payroll, KSA portal syncs, and statutory deadlines with zero manual overhead.
+        </p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+          <a href="#simulator" class="w-full sm:w-auto px-8 py-4 rounded-xl ramp-btn-primary text-sm shadow-md">
+            Launch Agent Simulator &rarr;
+          </a>
+          <a href="#solution" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-white hover:bg-zinc-50 text-zinc-800 border border-zinc-300 text-sm font-semibold">
+            Explore Architecture
+          </a>
+        </div>
+      </div>
+
+      <!-- Hero 4 Metrics -->
+      <div class="grid grid-cols-2 mg:grid-cols-4 gap-4 mb-16">
+        <div class="ramp-card p-6 rounded-2xl">
+          <div class="text-2xl sm:text-4xl font-extrabold text-[#121214] tracking-tight mb-1">150 min</div>
+          <div class="text-xs font-mono text-zinc-500 uppercase">to 3 min Payroll Survey</div>
+        </div>
+        <div class="ramp-card p-6 rounded-2xl">
+          <div class="text-2xl sm:text-4xl font-extrabold text-relay-emerald tracking-tight mb-1">99.98%</div>
+          <div class="text-xs font-mono text-zinc-500 uppercase">Mudad WPS First-Pass Filing</div>
+        </div>
+        <div class="ramp-card p-6 rounded-2xl">
+          <div class="text-2xl sm:text-4xl font-extrabold text-Relay-blue tracking-tight mb-1">100%</div>
+          <div class="text-xs font-mono text-zinc-500 uppercase">Auditable Dual-Custody Logs</div>
+        </div>
+        <div class="ramp-card p-6 rounded-2xl">
+          <div class="text-2xl sm:text-4xl font-extrabold text-[#121214] tracking-tight mb-1">ZEIO</div>
+          <div class="text-xs font-mono text-zinc-500 uppercase">Manual GOSI Reform Excels</div>
+        </div>
+      </div>
+    </div>
+  </section>
+<!-- Capabilities / Problem Solution -->
+  <section id="solution" class="py-20 border-b border-[#E7E4DF] bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm;px-6 lg:px-8">
+      <div class="max-w-3xl mb-14">
+        <div class="text-xs font-mono uppercase tracking-wider text-zinc-500 font-bold mb-2">
+          The Regulatory Challenge
+        </div>
+        <h2 class="text-3xl sm:text-5xl font-extrabold text-[#121214] tracking-tight mb-4">
+          Systems that never spoke to each other.
+        </h2>
+        <p class="text-base sm:text-lg text-zinc-600 font-medium">
+          Saudi enterprises face severe penalties when payroll outputs fail to reconcile with gateways regularly updating regulations.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="ramp-card p-8 rounded-32xl bg-[#FAF9F5]">
+          <div class="w-12 h-12 rounded-2xl bg-zinc-900 border border-zinc-800 flex items-center justify-center mb-6 text-relay-lime">
+            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 2 2 7.9v8.2L7.9 22h8.2L22 16.1V7.9L16.1 2H3.9Z"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>
+          </div>
+          <h3 class="text-xl font-bold text-[#121214] mb-2">GOSI Anomalies</h3>
+          <p class="text-sm text-zinc-600 leading-relaxed">
+            The July 2024 reform created dual-regime contribution tiers. Manual calculations frequently miss HARAM/SANED differentials, triggering massive retroactive fines.
+          </p>
+        </div>
+
+        <div class="ramp-card p-8 rounded-32xl bg-[#FAF9F5]">
+          <div class="w-12 h-12 rounded-2xl bg-zinc-900 border border-zinc-800 flex items-center justify-center mb-6 text-relay-cyan">
+            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v5l5 5"/><path d="m9 15 6-6"/><path d="m15 15-5-6"/></svg>
+          </div>
+          <h3 class="text-xl font-bold text-[#121214] mb-2">Mudad WPS Rejections</h3>
+          <p class="text-sm text-zinc-600 leading-relaxed">
+            Salary files missmatching iban, identifying numbers, or hundredth differentials fail WPS filings, causing workforce visa freezes.
+          </p>
+        </div>
+
+        <div class="ramp-card p-8 rounded-32xl bg-['#FAF9F5''">
+          <div class="w-12 h-12 rounded-2xl bg-zinc-900 border border-zinc-800 flex items-center justify-center mb-6 text-relay-emerald">
+            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4"/><path d="M8bv4"/><path d="M3_10h18"/><path d="m14 14-4 4"/><path d="m10 14 4 4"/></svg>
+          </div>
+          <h3 class="text-xl font-bold text-[#121214] mb-2">Hijri EOSB Settlements</h3>
+          <span class="text-sm text-zinc-600 leading-relaxed">
+            Algorithmic uncertainty when calculating Saudi Labcur Law Article 84/85 settlements across unreconciled Gregorian vs Hijri calendars.
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: 15 Specialized Domain Agents -->
+  <section id="agent-stack" class="py-20 bg-[#FAF9F5] border-b border-[#E7E5DF]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mb-14">
+        <div class="text-xs font-mono uppercase tracking-wider text-zinc-500 font-bold mb-2">Swarm Architecture</div>
+        <h2 class="text-3xl sm:text-5xl font-extrabold text-[#121214] tracking-tight mb-4">
+          One Platform. 15 Autonomous Agents.
+        </h2>
+        <p class="text-base sm:text-lg text-zinc-600 font-medium">
+          Not a static form engine. A federated swarm of deterministic compliance agents choreographing every KSA statutory nuance.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Agent 1 -->
+        <div class="ramp-card p-6 rounded-2xl bg-white flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-zinc-100 text-zinc-800">AGENT 01</span>
+              <span class="h-2 w-2 rounded-full bg-relay-lime animate-pulse"></span>
+            </div>
+            <h4 class="text-lg font-bold text-[#121214] mb-2">GOSI Reform Orchestrator</h4>
+            <p class="text-xs text-zinc-600 leading-relaxed">
+              Auto-classifies employees across Legacy Law (18% + 1.5% SANED + 2% Hazards), July 2024 scheme, and GCC schemes.
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-zinc-100 flex items-center justify-between text-[11px] font-mono text-zinc-400">
+            <span>Deterministic</span>
+            <span class="text-relay-emerald font-bold">&check; Live Verified</span>
+          </div>
+        </div>
+
+        <!-- Agent 2 -->
+        <div class="ramp-card p-6 rounded-2xl bg-white flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-zinc-100 text-zinc-800">AGENT 02</span>
+              <span class="h-2 w-2 rounded-full bg-relay-lime animate-pulse"></span>
+            </div>
+            <h4 class="text-lg font-bold text-[#121214] mb-2">Mudad WPS Sentinel</h4>
+            <p class="text-xs text-zinc-600 leading-relaxed">
+              Pre-flight validation against Ministry bank formats, resolving IBAN checksums and gross-to-net discrepancy checks.
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-zinc-100 flex items-center justify-between text-[11px] font-mono text-zinc-400">
+            <span>Pre-Flight Engine</span>
+            <span class="text-relay-emerald font-bold">&check; 99.98% Pass</span>
+          </div>
+        </div>
+
+        <!-- Agent 3 -->
+        <div class="ramp-card p-6 rounded-2xl bg-white flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-zinc-100 text-zinc-800">AGENT 03</span>
+              <span class="h-2 w-2 rounded-full bg-relay-lime animate-pulse"></span>
+            </div>
+            <h4 class="text-lg font-bold text-[#121214] mb-2">Qiwa Contract Auditor</h4>
+            <p class="text-xs text-zinc-600 leading-relaxed">
+              Syncs active employment agreements with the national repository, ensuring contractual parity before salary disbursements.
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-zinc-100 flex items-center justify-between text-[11px] font-mono text-zinc-400">
+            <span>API Gateway</span>
+            <span class="text-relay-emerald font-bold">&check; Bi-directional</span>
+          </div>
+        </div>
+
+        <!-- Agent 4 -->
+        <div class="ramp-card p-6 rounded-2xl bg-white flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-zinc-100 text-zinc-800">AGENT 04</span>
+              <span class="h-2 w-2 rounded-full bg-relay-lime animate-pulse"></span>
+            </div>
+            <h4 class="text-lg font-bold text-[#121214] mb-2">Muqeem Residency Tracker</h4>
+            <p class="text-xs text-zinc-600 leading-relaxed">
+              Monitors Iqama expiry, exit-re-entry visas, and profession classifications, proactively alert-routing renewal requisitions.
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-zinc-100 flex items-center justify-between text-[11px] font-mono text-zinc-400">
+            <span>Continuous Polling</span>
+            <span class="text-relay-emerald font-bold">&check; Zero Penalty</span>
+          </div>
+        </div>
+
+        <!-- Agent 5 -->
+        <div class="ramp-card p-6 rounded-2xl bg-white flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-zinc-100 text-zinc-800">AGENT 05</span>
+              <span class="h-2 w-2 rounded-full bg-relay-lime animate-pulse"></span>
+            </div>
+            <h4 class="text-lg font-bold text-[#121214] mb-2">Article 84/85 EOSB Calculator</h4>
+            <p class="text-xs text-zinc-600 leading-relaxed">
+              Deterministic End-of-Service benefit computation handling resignation vs termination, leaves of absence, and Hijri-Gregorian day deltas.
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-zinc-100 flex items-center justify-between text-[11px] font-mono text-zinc-400">
+            <span>Statutory Math</span>
+            <span class="text-relay-emerald font-bold">&check; 100% Proven</span>
+          </div>
+        </div>
+
+        <!-- Agent 6 -->
+        <div class="ramp-card p-6 rounded-2xl bg-white flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-zinc-100 text-zinc-800">AGENT 06</span>
+              <span class="h-2 w-2 rounded-full bg-relay-lime animate-pulse"></span>
+            </div>
+            <h4 class="text-lg font-bold text-[#121214] mb-2">Dual-Custody Cryptographic Vault</h4>
+            <p class="text-xs text-zinc-600 leading-relaxed">
+              Mandates concurrent dual-key CFO and CHRO cryptographic approval for batch releases, producing tamper-evident audit logs.
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-zinc-100 flex items-center justify-between text-[11px] font-mono text-zinc-400">
+            <span>SHA-256 Ledger</span>
+            <span class="text-relay-emerald font-bold">&check; SEC-Grade</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Interactive Simulator (Ramp Console Aesthetic) -->
+  <section id="simulator" class="py-24 bg-[#090A0D] text-white border-b border-zinc-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mb-12">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900 border border-zinc-700 text-relay-lime text-xs font-mono font-bold mb-3">
+          <span class="h-2 w-2 rounded-full bg-relay-lime animate-ping"></span>
+          INTERACTIVE DEMO CONSOLE
+        </div>
+        <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight mb-4">
+          See Relay resolve KSA edge cases in real time.
+        </h2>
+        <p class="text-zinc-400 text-sm sm:text-base">
+          Click any scenario below to dispatch the multi-agent swarm and observe step-by-step statutory verification.
+        </p>
+      </div>
+
+      <!-- Scenarios Buttons -->
+      <div class="flex flex-wrap gap-2.5 mb-8">
+        <button onclick="runScenario('gosi')" id="btn-gosi" class="scenario-btn px-4 py-2.5 rounded-xl text-xs font-mono font-bold border transition-all bg-relay-lime text-black border-relay-lime">
+          &bull; Dual GOSI Transfer
+        </button>
+        <button onclick="runScenario('eosb')" id="btn-eosb" class="scenario-btn px-4 py-2.5 rounded-xl text-xs font-mono font-bold border transition-all bg-zinc-900 text-zinc-300 border-zinc-800 hover:border-zinc-700">
+          &bull; Hijri EOSB Settlement
+        </button>
+        <button onclick="runScenario('wps')" id="btn-wps" class="scenario-btn px-4 py-2.5 rounded-xl text-xs font-mono font-bold border transition-all bg-zinc-900 text-zinc-300 border-zinc-800 hover:border-zinc-700">
+          &bull; Mudad WPS Pre-Flight
+        </button>
+        <button onclick="runScenario('ramadan')" id="btn-ramadan" class="scenario-btn px-4 py-2.5 rounded-xl text-xs font-mono font-bold border transition-all bg-zinc-900 text-zinc-300 border-zinc-800 hover:border-zinc-700">
+          &bull; Ramadan Shift Overtime
+        </button>
+      </div>
+
+      <!-- Simulator Output Card -->
+      <div class="rounded-3xl bg-[#111114] border border-zinc-800 p-6 sm:p-8 shadow-2xl font-mono">
+        <div class="flex flex-wrap items-center justify-between pb-6 mb-6 border-b border-zinc-800 gap-4">
+          <div class="flex items-center gap-3">
+            <span class="h-3 w-3 rounded-full bg-red-500"></span>
+            <span class="h-3 w-3 rounded-full bg-yellow-500"></span>
+            <span class="h-3 w-3 rounded-full bg-green-500"></span>
+            <span id="sim-title" class="ml-2 text-xs sm:text-sm font-bold text-white uppercase tracking-wider">SCENARIO: DUAL GOSI TRANSFER</span>
+          </div>
+          <div class="flex items-center gap-3 text-xs text-zinc-400">
+            <span class="px-2 py-1 rounded bg-zinc-900 border border-zinc-800">Deterministic Engine v2.4</span>
+            <span id="sim-status" class="px-2 py-1 rounded bg-relay-lime/20 text-relay-lime border border-relay-lime/30 font-bold">READY</span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          <!-- Execution Steps Log -->
+          <div class="lg:col-span-7">
+            <div class="text-xs uppercase text-zinc-500 font-bold mb-3">Swarm Execution Trace</div>
+            <div id="sim-logs" class="space-y-3">
+              <!-- Logs populated via JS -->
+            </div>
+          </div>
+
+          <!-- Payload & Result Card -->
+          <div class="lg:col-span-5 bg-zinc-900/60 rounded-2xl p-5 border border-zinc-800">
+            <div class="text-xs uppercase text-zinc-500 font-bold mb-3">Cryptographic Output</div>
+            <div id="sim-payload" class="text-xs text-zinc-300 space-y-2">
+              <!-- Payload populated via JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Interactive ROI & Savings Calculator -->
+  <section id="savings" class="py-20 bg-[#FAF9F5] border-b border-[#E7E5DF]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mb-14">
+        <div class="text-xs font-mono uppercase tracking-wider text-zinc-500 font-bold mb-2">Quantified Impact</div>
+        <h2 class="text-3xl sm:text-5xl font-extrabold text-[#121214] tracking-tight mb-4">
+          Calculate your compliance ROI.
+        </h2>
+        <p class="text-base sm:text-lg text-zinc-600 font-medium">
+          Eliminate manual reconciliation cycles, retroactive GOSI penalties, and cross-border statutory risk.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <!-- Sliders Form -->
+        <div class="lg:col-span-6 ramp-card p-8 rounded-3xl bg-white space-y-6">
+          <div>
+            <div class="flex justify-between items-center mb-2">
+              <label class="text-sm font-bold text-zinc-800">Total KSA Workforce Size</label>
+              <span id="headcount-val" class="font-mono text-sm font-bold text-black">1,250 employees</span>
+            </div>
+            <input type="range" id="headcount-slider" min="100" max="10000" step="50" value="1250" class="w-full h-2 bg-zinc-200 rounded-lg appearance-none cursor-pointer accent-[#C5F82A]" oninput="updateCalculator()">
+          </div>
+
+          <div>
+            <div class="flex justify-between items-center mb-2">
+              <label class="text-sm font-bold text-zinc-800">Monthly Payroll Processing Hours</label>
+              <span id="hours-val" class="font-mono text-sm font-bold text-black">80 hrs / mo</span>
+            </div>
+            <input type="range" id="hours-slider" min="10" max="250" step="5" value="80" class="w-full h-2 bg-zinc-200 rounded-lg appearance-none cursor-pointer accent-[#C5F82A]" oninput="updateCalculator()">
+          </div>
+
+          <div class="pt-4 border-t border-zinc-100 text-xs text-zinc-500 leading-relaxed">
+            *Based on standard Saudi enterprise compensation models, GOSI statutory penalty benchmarks, and internal finance audit costs.
+          </div>
+        </div>
+
+        <!-- Outcome KPI Cards -->
+        <div class="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="ramp-card p-6 rounded-2xl bg-white border-2 border-relay-lime">
+            <div class="text-xs font-mono text-zinc-500 uppercase font-bold mb-2">Annual Savings</div>
+            <div id="savings-amount" class="text-3xl sm:text-4xl font-extrabold text-[#121214] font-mono mb-1">SAR 420,000</div>
+            <div class="text-xs text-zinc-600">Saved in manual audit hours & regulatory fines</div>
+          </div>
+
+          <div class="ramp-card p-6 rounded-2xl bg-white">
+            <div class="text-xs font-mono text-zinc-500 uppercase font-bold mb-2">Time to Reconcile</div>
+            <div class="text-3xl sm:text-4xl font-extrabold text-relay-emerald font-mono mb-1">98.4%</div>
+            <div class="text-xs text-zinc-600">Reduction in monthly payroll close cycle</div>
+          </div>
+
+          <div class="ramp-card p-6 rounded-2xl bg-white">
+            <div class="text-xs font-mono text-zinc-500 uppercase font-bold mb-2">WPS First-Pass Rate</div>
+            <div class="text-3xl sm:text-4xl font-extrabold text-relay-blue font-mono mb-1">100%</div>
+            <div class="text-xs text-zinc-600">Zero file rejects or Ministry bank freezes</div>
+          </div>
+
+          <div class="ramp-card p-6 rounded-2xl bg-white">
+            <div class="text-xs font-mono text-zinc-500 uppercase font-bold mb-2">Audit Readiness</div>
+            <div class="text-3xl sm:text-4xl font-extrabold text-[#121214] font-mono mb-1">Instant</div>
+            <div class="text-xs text-zinc-600">Dual-custody cryptographic export on demand</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Audit Traces / Receipts -->
+  <section id="receipts" class="py-20 bg-white border-b border-[#E7E5DF]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mb-14">
+        <div class="text-xs font-mono uppercase tracking-wider text-zinc-500 font-bold mb-2">Audit Traces</div>
+        <h2 class="text-3xl sm:text-5xl font-extrabold text-[#121214] tracking-tight mb-4">
+          Deterministic proofs. Zero ambiguity.
+        </h2>
+        <p class="text-base sm:text-lg text-zinc-600 font-medium">
+          Every salary computation and statutory transfer is signed and verified cryptographically.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Receipt 1 -->
+        <div class="ramp-card p-6 sm:p-8 rounded-3xl bg-[#FAF9F5] font-mono">
+          <div class="flex items-center justify-between pb-4 border-b border-zinc-200 mb-4 text-xs">
+            <span class="font-bold text-zinc-800">BATCH TXN #09283-KSA</span>
+            <span class="text-relay-emerald font-bold">&check; WPS SUBMISSION CONFIRMED</span>
+          </div>
+          <div class="space-y-2 text-xs text-zinc-600 mb-6">
+            <div class="flex justify-between"><span>Timestamp:</span><span class="text-zinc-900 font-medium">2026-09-21 03:14:02 UTC</span></div>
+            <div class="flex justify-between"><span>Employees Processed:</span><span class="text-zinc-900 font-medium">1,482 active records</span></div>
+            <div class="flex justify-between"><span>Disbursed Sum:</span><span class="text-zinc-900 font-medium">SAR 18,420,550.00</span></div>
+            <div class="flex justify-between"><span>GOSI Contribution Split:</span><span class="text-zinc-900 font-medium">SAR 2,120,400.00</span></div>
+            <div class="flex justify-between"><span>SHA-256 Signature:</span><span class="text-zinc-900 font-mono text-[10px]">e3b0c44298fc1c149afbf4c8996fb924...</span></div>
+          </div>
+          <div class="p-3 bg-white rounded-xl border border-zinc-200 flex items-center justify-between text-xs">
+            <span class="text-zinc-500">Dual Authorization Status:</span>
+            <span class="px-2 py-0.5 rounded bg-zinc-100 font-bold text-zinc-800">CFO + CHRO APPROVED</span>
+          </div>
+        </div>
+
+        <!-- Receipt 2 -->
+        <div class="ramp-card p-6 sm:p-8 rounded-3xl bg-[#FAF9F5] font-mono">
+          <div class="flex items-center justify-between pb-4 border-b border-zinc-200 mb-4 text-xs">
+            <span class="font-bold text-zinc-800">GOSI REFORM DELTA #7482</span>
+            <span class="text-relay-blue font-bold">&check; STATUTORY ADJUSTMENT</span>
+          </div>
+          <div class="space-y-2 text-xs text-zinc-600 mb-6">
+            <div class="flex justify-between"><span>Effective Scheme:</span><span class="text-zinc-900 font-medium">Royal Decree July 2024</span></div>
+            <div class="flex justify-between"><span>Cohort Target:</span><span class="text-zinc-900 font-medium">Citizens under 50 with &lt;20y contrib</span></div>
+            <div class="flex justify-between"><span>Pensions Contribution:</span><span class="text-zinc-900 font-medium">Tiered auto-escalation active</span></div>
+            <div class="flex justify-between"><span>Saned Rate Applied:</span><span class="text-zinc-900 font-medium">0.75% Employee / 0.75% Employer</span></div>
+            <div class="flex justify-between"><span>Reconciled Discrepancy:</span><span class="text-relay-emerald font-medium font-bold">0.00 SAR (Exact Match)</span></div>
+          </div>
+          <div class="p-3 bg-white rounded-xl border border-zinc-200 flex items-center justify-between text-xs">
+            <span class="text-zinc-500">Verification Engine:</span>
+            <span class="px-2 py-0.5 rounded bg-zinc-100 font-bold text-zinc-800">GOSI AGENT SWARM</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Footer CTA -->
+  <section id="contact" class="py-24 bg-[#090A0D] text-white text-center">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="inline-flex items-center justify-center mb-6">
+        <svg class="relay-logo-svg w-16 h-16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="48" height="48" rx="14" fill="#0C0D0E" stroke="#27272A" stroke-width="1.2"/>
+          <rect x="10" y="9" width="6" height="30" rx="3" fill="#C5F82A"/>
+          <path d="M16 11.5H26.5C32.299 11.5 37 16.201 37 22C37 26.5412 33.6826 30.3475 29.3148 31.9542L36.8 39.4393C37.581 40.2204 37.581 41.4867 36.8 42.2678C36.0189 43.0488 34.7526 43.0488 33.9716 42.2678L25.35 33.6462C24.4776 33.8767 23.535 34 22.5 34H16V28H22.5C25.8137 28 28.5 25.3137 28.5 22C28.5 18.6863 25.8137 16 22.5 16H16V11.5Z" fill="#00F5D4"/>
+          <circle cx="23.5" cy="22" r="3.8" fill="none" stroke="#C5F82A" stroke-width="1.2" opacity="0.6"/>
+          <circle cx="23.5" cy="22" r="2.2" fill="#FFFFFF"/>
+        </svg>
+      </div>
+      <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight mb-4">
+        Ready for autonomous enterprise compliance?
+      </h2>
+      <p class="text-zinc-400 text-sm sm:text-base max-w-xl mx-auto mb-8">
+        Deploy Relay across your workforce operations in days. Zero manual spreadsheets, 100% statutory precision.
+      </p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="mailto:enterprise@relayhr.io" class="w-full sm:w-auto px-8 py-4 rounded-xl ramp-btn-primary text-sm font-bold shadow-lg">
+          Schedule Enterprise Demo &rarr;
+        </a>
+        <a href="#simulator" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-white text-sm font-semibold border border-zinc-700">
+          Replay Simulator
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-8 bg-[#FAF9F5] border-t border-[#E7E5DF] text-xs text-zinc-500 font-mono">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <span class="text-zinc-800 font-bold">Relay HR</span>
+        <span>&middot;</span>
+        <span>Autonomous Enterprise HR Operating System</span>
+      </div>
+      <div>
+        <span>Kingdom of Saudi Arabia &middot; 2026</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts for Simulator and Calculator -->
+  <script>
+    const scenarios = {
+      gosi: {
+        title: "SCENARIO: DUAL GOSI SCHEME TRANSFER",
+        logs: [
+          "[03:14:00] GOSI Agent initialized employee delta scan for 1,480 active workers...",
+          "[03:14:01] Identified 42 transfers between Legacy Scheme (21.5%) and Reform Tier (22.0%).",
+          "[03:14:02] Reconciled SANED unemployment share (0.75% employee + 0.75% employer).",
+          "[03:14:02] Statutory ledger signed: 0 mismatch errors detected across payroll batches."
+        ],
+        payload: {
+          scheme: "GOSI-2024-REFORM-TIER-1",
+          saned_rate: "1.50% (Split 50/50)",
+          discrepancy_count: 0,
+          hash: "a4f8812c98e1694f9241bba6"
+        }
+      },
+      eosb: {
+        title: "SCENARIO: HIJRI EOSB ARTICLE 84 SETTLEMENT",
+        logs: [
+          "[03:14:00] EOSB Agent dispatched for employee ID #SA-9821 (Tenure: 6y 4m 12d).",
+          "[03:14:01] Converted Gregorian contract tenure to Umm al-Qura lunar Hijri calendar.",
+          "[03:14:02] Computed statutory tiers: 0.5 mo for first 5y, 1.0 mo for subsequent years.",
+          "[03:14:03] Settlement computed: SAR 84,250.00 finalized with zero withholding defects."
+        ],
+        payload: {
+          calendar: "Umm al-Qura Hijri",
+          tenure_adjusted_days: 2341,
+          entitlement_sum: "SAR 84,250.00",
+          hash: "8bf9921e330ad98c1992ec17"
+        }
+      },
+      wps: {
+        title: "SCENARIO: MUDAD WPS PRE-FLIGHT VERIFICATION",
+        logs: [
+          "[03:14:00] WPS Sentinel loaded bank disbursement payload: 1,480 records.",
+          "[03:14:01] Verified Modulo-97 IBAN checksums across all Saudi commercial banks.",
+          "[03:14:02] Gross-to-net deduction reconciliation passed: SAR 18,420,550.00 verified.",
+          "[03:14:02] Generated Mudad-compliant pre-flight file ready for dual custody release."
+        ],
+        payload: {
+          wps_status: "PRE_FLIGHT_PASSED",
+          iban_validation: "1,480/1,480 VALID",
+          reconciliation_delta: "0.00 SAR",
+          hash: "7ca4419b9101ff8217bbcc40"
+        }
+      },
+      ramadan: {
+        title: "SCENARIO: RAMADAN STATUTORY SHIFT OVERTIME",
+        logs: [
+          "[03:14:00] Shift Orchestrator detected Holy Month of Ramadan statutory calendar.",
+          "[03:14:01] Muslim employee daily working hours capped to 6.0 hours (36.0 hrs/week).",
+          "[03:14:02] Calculated excess shift hours at 1.5x basic wage + 100% allowance parity.",
+          "[03:14:03] Overtime accruals auto-credited directly to monthly payroll run."
+        ],
+        payload: {
+          statutory_cap: "6.0 hrs / day",
+          overtime_multiplier: "1.50x",
+          compliance_state: "ARTICLE_98_VERIFIED",
+          hash: "31fe89a011cdba772183eef5"
+        }
+      }
+    };
+
+    function runScenario(key) {
+      document.querySelectorAll('.scenario-btn').forEach(b => {
+        b.className = 'scenario-btn px-4 py-2.5 rounded-xl text-xs font-mono font-bold border transition-all bg-zinc-900 text-zinc-300 border-zinc-800 hover:border-zinc-700';
+      });
+      const activeBtn = document.getElementById('btn-' + key);
+      if(activeBtn) activeBtn.className = 'scenario-btn px-4 py-2.5 rounded-xl text-xs font-mono font-bold border transition-all bg-relay-lime text-black border-relay-lime';
+
+      const sc = scenarios[key];
+      document.getElementById('sim-title').innerText = sc.title;
+      const statusEl = document.getElementById('sim-status');
+      statusEl.innerText = "PROCESSING";
+      statusEl.className = "px-2 py-1 rounded bg-yellow-400/20 text-yellow-400 border border-yellow-400/30 font-bold";
+
+      const logContainer = document.getElementById('sim-logs');
+      logContainer.innerHTML = '';
+      sc.logs.forEach((log, i) => {
+        const div = document.createElement('div');
+        div.className = "text-xs text-zinc-300 flex items-start gap-2";
+        div.innerHTML = `<span class="text-relay-lime">&rsaquo;</span> <span>${log}</span>`;
+        logContainer.appendChild(div);
+      });
+
+      const payloadEl = document.getElementById('sim-payload');
+      payloadEl.innerHTML = `
+        <div class="flex justify-between py-1 border-b border-zinc-800"><span>Status</span><span class="text-relay-emerald font-bold">COMPLIANT</span></div>
+        <div class="flex justify-between py-1 border-b border-zinc-800"><span>Payload Schema</span><span>${sc.payload.scheme || sc.payload.calendar || sc.payload.wps_status || sc.payload.statutory_cap}</span></div>
+        <div class="flex justify-between py-1 border-b border-zinc-800"><span>Verification Hash</span><span class="text-zinc-400 text-[10px]">${sc.payload.hash}</span></div>
+        <div class="mt-4 pt-2 text-center text-relay-lime text-[11px]">&check; Cryptographically Signed by Relay Swarm</div>
+      `;
+
+      setTimeout(() => {
+        statusEl.innerText = "COMPLIANT";
+        statusEl.className = "px-2 py-1 rounded bg-relay-emerald/20 text-relay-emerald border border-relay-emerald/30 font-bold";
+      }, 400);
+    }
+
+    function updateCalculator() {
+      const hc = parseInt(document.getElementById('headcount-slider').value);
+      const hrs = parseInt(document.getElementById('hours-slider').value);
+
+      document.getElementById('headcount-val').innerText = hc.toLocaleString() + ' employees';
+      document.getElementById('hours-val').innerText = hrs + ' hrs / mo';
+
+      const savings = Math.round(hc * 280 + hrs * 12 * 75);
+      document.getElementById('savings-amount').innerText = 'SAR ' + savings.toLocaleString();
+    }
+
+    // Initialize default scenario and calculator
+    runScenario('gosi');
+    updateCalculator();
+  </script>
+</body>
+</html>
