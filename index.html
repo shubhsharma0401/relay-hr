@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
   <title>Relay — Autonomous Enterprise HR Operating System</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2216%22%20fill%3D%22%230C0D0E%22/%3E%3Cpath%20d%3D%22M16%2018h22L16%2046h32%22%20stroke%3D%22%23C5F82A%22%20stroke-width%3D%225%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20fill%3D%22none%22/%3E%3Ccircle%20cx%3D%2216%22%20cy%3D%2218%22%20r%3D%224%22%20fill%3D%22%23C5F82A%22/%3E%3Ccircle%20cx%3D%2238%22%20cy%3D%2218%22%20r%3D%224.5%22%20fill%3D%22%2300F5D4%22/%3E%3Ccircle%20cx%3D%2216%22%20cy%3D%2246%22%20r%3D%224%22%20fill%3D%22%2310B981%22/%3E%3Ccircle%20cx%3D%2248%22%20cy%3D%2246%22%20r%3D%225%22%20fill%3D%22%23FFFFFF%22/%3E%3C/svg%3E">
   <meta name="description" content="Relay is the Autonomous Enterprise HR Operating System. Multi-agent swarm orchestration for autonomous payroll, KSA statutory compliance (WPS, GOSI, Qiwa, Muqiem, Mudad), and enterprise workforce operations." />
 
   <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
@@ -40,9 +41,9 @@
   <style>
     * { -moz-osx-inspector-font-smoothing: grayscale; -webkit-font-smoothing: antialiased; box-sizing: border-box; }
     body { background-color: #FAF9F5; color: #121214; font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; }
-    .ramp-btn-primary { background-color: #C5F82A; color: #121214; font-weight: 700; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); display: inline-flex; items-senter; justify-content: center; }
+    .ramp-btn-primary { background-color: #C5F82A; color: #121214; font-weight: 700; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); display: inline-flex; items-center; justify-content: center; }
     .ramp-btn-primary:hover { background-color: #B2E21F; transform: translateY(-1px); }
-    .ramp-btn-dark { background-color: #121214; color: #FFFFFF; font-weight: 600; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); display: inline-flex; items-senter; justify-content: center; }
+    .ramp-btn-dark { background-color: #121214; color: #FFFFFF; font-weight: 600; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); display: inline-flex; items-center; justify-content: center; }
     .ramp-btn-dark:hover { background-color: #27272A; transform: translateY(-1px); }
     .ramp-card { background: #FFFFFF; border: 1px solid #E7E4DF; box-shadow: 0 1px 3px rgba(0,0,0,0.03), 0 6px 16px rgba(0,0,0,0.02); transition: all 0.25s inout; }
     .ramp-card:hover { border-color: #D3D0C6; box-shadow: 0 4px 20px rgba(0,0,0,0.06); transform: translateY(-2px); }
@@ -57,6 +58,16 @@
     }
     .icon-glow { transition: all 0.3s ease; }
     .icon-glow:hover { transform: scale(1.08); }
+
+    .relay-pulse-ring {
+      transform-origin: center;
+      animation: relay-ring-expand 3s cubic-bezier(0.25, 1, 0.5, 1) infinite;
+    }
+    @keyframes relay-ring-expand {
+      0% { r: 4px; opacity: 0.8; }
+      50% { r: 9px; opacity: 0.15; }
+      100% { r: 4px; opacity: 0.8; }
+    }
   </style>
 </head>
 <body>
@@ -79,35 +90,71 @@
   </div>
 
   <!-- Navbar -->
-  <nav class="sticky top-0 z-50 bg-#SAF9F5/90 backdrop-blur-md border-b border-[#E7E4DF]">
-    <div class="max-w-7xl mx-auto px-4 sm;px-6 lg:px-8 py-3.5 flex items-center justify-between">
+  <nav class="sticky top-0 z-50 bg-[#FAF9F5]/90 backdrop-blur-md border-b border-[#E7E4DF]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between">
       <a href="#" class="flex items-center gap-3 group">
         <div class="relative flex items-center justify-center">
-          <svg class="relay-logo-svg wp-9 h-9" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg class="relay-logo-svg w-9 h-9 select-none transition-transform duration-300 group-hover:scale-105" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
             <defs>
-              <linearGradient id="relay-nav-stem" x1="0%" y1="0%" x2="0%" y2="100%">
+              <linearGradient id="relay-nav-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#14151A"/>
+                <stop offset="100%" stop-color="#08090C"/>
+              </linearGradient>
+              <linearGradient id="relay-nav-stream-top" x1="16" y1="18" x2="38" y2="18" gradientUnits="userSpaceOnUse">
                 <stop offset="0%" stop-color="#C5F82A"/>
+                <stop offset="100%" stop-color="#00F5D4"/>
+              </linearGradient>
+              <linearGradient id="relay-nav-stream-bot" x1="16" y1="46" x2="48" y2="46" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#10B981"/>
+                <stop offset="100%" stop-color="#C5F82A"/>
+              </linearGradient>
+              <linearGradient id="relay-nav-stream-diag" x1="38" y1="18" x2="16" y2="46" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#00F5D4"/>
+                <stop offset="50%" stop-color="#38BDF8"/>
                 <stop offset="100%" stop-color="#10B981"/>
               </linearGradient>
-              <linearGradient id="relay-nav-loop" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#C5F82A"/>
+              <radialGradient id="relay-nav-node-accent" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#FFFFFF"/>
+                <stop offset="55%" stop-color="#C5F82A"/>
+                <stop offset="100%" stop-color="#10B981"/>
+              </radialGradient>
+              <radialGradient id="relay-nav-node-cyan" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#FFFFFF"/>
                 <stop offset="50%" stop-color="#00F5D4"/>
-                <stop offset="100%" stop-color="#3B82F6"/>
-              </linearGradient>
-              <filter id="relay-nav-glow" x="-25%" y="-25%" width="150%" height="150%">
-                <feGaussianBlur stdDeviation="1.5" result="blur" />
+                <stop offset="100%" stop-color="#0284C7"/>
+              </radialGradient>
+              <filter id="relay-nav-glow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="2" result="blur" />
                 <feComposite in="SourceGraphic" in2="blur" operator="over" />
               </filter>
             </defs>
-            <rect width="48" height="48" rx="14" fill="#0C0D0E" stroke="#27272A" stroke-width="1.2"/>
-            <rect x="10" y="9" width="6" height="30" rx="3" fill="url(#relay-nav-stem)"/>
-            <path d="M16 11.5H26.5C32.299 11.5 37 16.201 37 22C37 26.5412 33.6826 30.3475 29.3148 31.9542L36.8 39.4393C37.581 40.2204 37.581 41.4867 36.8 42.2678C36.0189 43.0488 34.7526 43.0488 33.9716 42.2678L25.35 33.6462C24.4776 33.8767 23.535 34 22.5 34H16V28H22.5C25.8137 28 28.5 25.3137 28.5 22C28.5 18.6863 25.8137 16 22.5 16H16V11.5Z" fill="url(#relay-nav-loop)" filter="url(#relay-nav-glow)"/>
-            <circle cx="23.5" cy="22" r="3.8" fill="none" stroke="#C5F12A" stroke-width="1.2" opacity="0.6"/>
-            <circle cx="23.5" cy="22" r="2.2" fill="#FFFFFF" class="relay-beacon-dot"/>
+            <rect width="64" height="64" rx="18" fill="url(#relay-nav-bg)" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
+            <rect x="1.5" y="1.5" width="61" height="61" rx="16.5" fill="none" stroke="rgba(197,248,42,0.14)" stroke-width="1"/>
+            <g opacity="0.4" filter="url(#relay-nav-glow)">
+              <line x1="16" y1="18" x2="38" y2="18" stroke="#00F5D4" stroke-width="4.5" stroke-linecap="round"/>
+              <line x1="38" y1="18" x2="16" y2="46" stroke="#38BDF8" stroke-width="4.5" stroke-linecap="round"/>
+              <line x1="16" y1="46" x2="48" y2="46" stroke="#C5F82A" stroke-width="4.5" stroke-linecap="round"/>
+            </g>
+            <path d="M 16 18 L 38 18" stroke="url(#relay-nav-stream-top)" stroke-width="3" stroke-linecap="round"/>
+            <path d="M 38 18 L 16 46" stroke="url(#relay-nav-stream-diag)" stroke-width="3" stroke-linecap="round"/>
+            <path d="M 16 46 L 48 46" stroke="url(#relay-nav-stream-bot)" stroke-width="3" stroke-linecap="round"/>
+            <path d="M 28.5 30 L 48 46" stroke="#38BDF8" stroke-width="2.5" stroke-dasharray="3 3" stroke-linecap="round" opacity="0.8"/>
+            <circle cx="38" cy="18" r="7" fill="none" stroke="#00F5D4" stroke-width="1" opacity="0.6" class="relay-pulse-ring"/>
+            <circle cx="48" cy="46" r="8" fill="none" stroke="#C5F82A" stroke-width="1.2" opacity="0.8" class="relay-pulse-ring"/>
+            <circle cx="16" cy="18" r="4.5" fill="#14151A" stroke="#C5F82A" stroke-width="2"/>
+            <circle cx="16" cy="18" r="2" fill="#C5F82A"/>
+            <circle cx="38" cy="18" r="5" fill="#0A1E24" stroke="url(#relay-nav-node-cyan)" stroke-width="2"/>
+            <circle cx="38" cy="18" r="2.2" fill="#FFFFFF"/>
+            <circle cx="16" cy="46" r="4.5" fill="#14151A" stroke="#10B981" stroke-width="2"/>
+            <circle cx="16" cy="46" r="2" fill="#10B981"/>
+            <circle cx="28.5" cy="30" r="3.2" fill="#14151A" stroke="#38BDF8" stroke-width="1.8"/>
+            <circle cx="28.5" cy="30" r="1.4" fill="#38BDF8"/>
+            <circle cx="48" cy="46" r="5.5" fill="#162908" stroke="url(#relay-nav-node-accent)" stroke-width="2"/>
+            <circle cx="48" cy="46" r="2.5" fill="#FFFFFF" class="relay-beacon-dot"/>
           </svg>
         </div>
         <div>
-          <span class="text-xl font-extrabold tracking-tight text-#121214">Relay</span>
+          <span class="text-xl font-extrabold tracking-tight text-[#121214]">Relay</span>
           <span class="ml-2 text-[xs] font-mono px-1.5 py-0.5 rounded bg-zinc-200 text-zinc-800 font-bold uppercase hidden sm:inline-block">Autonomous HR</span>
         </div>
       </a>
@@ -539,13 +586,64 @@
   <section id="contact" class="py-24 bg-[#090A0D] text-white text-center">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="inline-flex items-center justify-center mb-6">
-        <svg class="relay-logo-svg w-16 h-16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect width="48" height="48" rx="14" fill="#0C0D0E" stroke="#27272A" stroke-width="1.2"/>
-          <rect x="10" y="9" width="6" height="30" rx="3" fill="#C5F82A"/>
-          <path d="M16 11.5H26.5C32.299 11.5 37 16.201 37 22C37 26.5412 33.6826 30.3475 29.3148 31.9542L36.8 39.4393C37.581 40.2204 37.581 41.4867 36.8 42.2678C36.0189 43.0488 34.7526 43.0488 33.9716 42.2678L25.35 33.6462C24.4776 33.8767 23.535 34 22.5 34H16V28H22.5C25.8137 28 28.5 25.3137 28.5 22C28.5 18.6863 25.8137 16 22.5 16H16V11.5Z" fill="#00F5D4"/>
-          <circle cx="23.5" cy="22" r="3.8" fill="none" stroke="#C5F82A" stroke-width="1.2" opacity="0.6"/>
-          <circle cx="23.5" cy="22" r="2.2" fill="#FFFFFF"/>
-        </svg>
+        <svg class="relay-logo-svg w-16 h-16 select-none transition-transform duration-300 hover:scale-105" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="relay-ft-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#14151A"/>
+                <stop offset="100%" stop-color="#08090C"/>
+              </linearGradient>
+              <linearGradient id="relay-ft-stream-top" x1="16" y1="18" x2="38" y2="18" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#C5F82A"/>
+                <stop offset="100%" stop-color="#00F5D4"/>
+              </linearGradient>
+              <linearGradient id="relay-ft-stream-bot" x1="16" y1="46" x2="48" y2="46" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#10B981"/>
+                <stop offset="100%" stop-color="#C5F82A"/>
+              </linearGradient>
+              <linearGradient id="relay-ft-stream-diag" x1="38" y1="18" x2="16" y2="46" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#00F5D4"/>
+                <stop offset="50%" stop-color="#38BDF8"/>
+                <stop offset="100%" stop-color="#10B981"/>
+              </linearGradient>
+              <radialGradient id="relay-ft-node-accent" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#FFFFFF"/>
+                <stop offset="55%" stop-color="#C5F82A"/>
+                <stop offset="100%" stop-color="#10B981"/>
+              </radialGradient>
+              <radialGradient id="relay-ft-node-cyan" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#FFFFFF"/>
+                <stop offset="50%" stop-color="#00F5D4"/>
+                <stop offset="100%" stop-color="#0284C7"/>
+              </radialGradient>
+              <filter id="relay-ft-glow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="2.5" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              </filter>
+            </defs>
+            <rect width="64" height="64" rx="18" fill="url(#relay-ft-bg)" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+            <rect x="1.5" y="1.5" width="61" height="61" rx="16.5" fill="none" stroke="rgba(197,248,42,0.18)" stroke-width="1"/>
+            <g opacity="0.45" filter="url(#relay-ft-glow)">
+              <line x1="16" y1="18" x2="38" y2="18" stroke="#00F5D4" stroke-width="5" stroke-linecap="round"/>
+              <line x1="38" y1="18" x2="16" y2="46" stroke="#38BDF8" stroke-width="5" stroke-linecap="round"/>
+              <line x1="16" y1="46" x2="48" y2="46" stroke="#C5F82A" stroke-width="5" stroke-linecap="round"/>
+            </g>
+            <path d="M 16 18 L 38 18" stroke="url(#relay-ft-stream-top)" stroke-width="3.5" stroke-linecap="round"/>
+            <path d="M 38 18 L 16 46" stroke="url(#relay-ft-stream-diag)" stroke-width="3.5" stroke-linecap="round"/>
+            <path d="M 16 46 L 48 46" stroke="url(#relay-ft-stream-bot)" stroke-width="3.5" stroke-linecap="round"/>
+            <path d="M 28.5 30 L 48 46" stroke="#38BDF8" stroke-width="2.5" stroke-dasharray="3 3" stroke-linecap="round" opacity="0.8"/>
+            <circle cx="38" cy="18" r="8" fill="none" stroke="#00F5D4" stroke-width="1.2" opacity="0.6" class="relay-pulse-ring"/>
+            <circle cx="48" cy="46" r="9.5" fill="none" stroke="#C5F82A" stroke-width="1.4" opacity="0.85" class="relay-pulse-ring"/>
+            <circle cx="16" cy="18" r="5" fill="#14151A" stroke="#C5F82A" stroke-width="2"/>
+            <circle cx="16" cy="18" r="2.2" fill="#C5F82A"/>
+            <circle cx="38" cy="18" r="5.5" fill="#0A1E24" stroke="url(#relay-ft-node-cyan)" stroke-width="2"/>
+            <circle cx="38" cy="18" r="2.5" fill="#FFFFFF"/>
+            <circle cx="16" cy="46" r="5" fill="#14151A" stroke="#10B981" stroke-width="2"/>
+            <circle cx="16" cy="46" r="2.2" fill="#10B981"/>
+            <circle cx="28.5" cy="30" r="3.5" fill="#14151A" stroke="#38BDF8" stroke-width="2"/>
+            <circle cx="28.5" cy="30" r="1.6" fill="#38BDF8"/>
+            <circle cx="48" cy="46" r="6" fill="#162908" stroke="url(#relay-ft-node-accent)" stroke-width="2.2"/>
+            <circle cx="48" cy="46" r="2.8" fill="#FFFFFF" class="relay-beacon-dot"/>
+          </svg>
       </div>
       <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight mb-4">
         Ready for autonomous enterprise compliance?
@@ -568,7 +666,16 @@
   <footer class="py-8 bg-[#FAF9F5] border-t border-[#E7E5DF] text-xs text-zinc-500 font-mono">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
       <div class="flex items-center gap-2">
-        <span class="text-zinc-800 font-bold">Relay HR</span>
+        <span class="inline-flex items-center gap-1.5"><span class="text-zinc-800 font-bold">Relay HR</span><svg class="w-5 h-5 select-none" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="64" height="64" rx="16" fill="#121214"/>
+          <path d="M 16 18 L 38 18" stroke="#00F5D4" stroke-width="4.5" stroke-linecap="round"/>
+          <path d="M 38 18 L 16 46" stroke="#38BDF8" stroke-width="4.5" stroke-linecap="round"/>
+          <path d="M 16 46 L 48 46" stroke="#C5F82A" stroke-width="4.5" stroke-linecap="round"/>
+          <circle cx="16" cy="18" r="4.5" fill="#C5F82A"/>
+          <circle cx="38" cy="18" r="5" fill="#00F5D4"/>
+          <circle cx="16" cy="46" r="4.5" fill="#10B981"/>
+          <circle cx="48" cy="46" r="5.5" fill="#C5F82A"/>
+        </svg></span>
         <span>&middot;</span>
         <span>Autonomous Enterprise HR Operating System</span>
       </div>
